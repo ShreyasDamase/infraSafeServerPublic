@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Oops! Something went wrong | InfraSafe</title>
+  <style>
+    :root {
+      --primary-color: #003366;
+      --secondary-color: #007BFF;
+      --accent-color: #FF6B6B;
+      --text-color: #333;
+      --light-bg: #f0f4f8;
+      --card-bg: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, var(--light-bg), #d9e2ec);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 800px;
+      width: 100%;
+      text-align: center;
+      animation: fadeInUp 1s ease;
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      color: var(--secondary-color);
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+    }
+
+    .error-details {
+      background-color: rgba(255, 107, 107, 0.1);
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      font-family: monospace;
+      text-align: left;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+
+    .game-container {
+      margin: 40px 0;
+      padding: 20px;
+      background-color: rgba(0, 123, 255, 0.05);
+      border-radius: 12px;
+      border: 1px dashed rgba(0, 123, 255, 0.3);
+    }
+
+    .game-title {
+      font-size: 1.5rem;
+      color: var(--secondary-color);
+      margin-bottom: 15px;
+    }
+
+    .game-button {
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1.2rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
+      margin-bottom: 20px;
+    }
+
+    .game-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(255, 107, 107, 0.4);
+    }
+
+    .game-button:active {
+      transform: translateY(1px);
+    }
+
+    .game-stats {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 15px;
+    }
+
+    .stat {
+      font-size: 1.1rem;
+    }
+
+    .stat-value {
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .action-button {
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      font-weight: 600;
+    }
+
+    .primary {
+      background-color: var(--secondary-color);
+      color: white;
+    }
+
+    .secondary {
+      background-color: transparent;
+      border-color: var(--secondary-color);
+      color: var(--secondary-color);
+    }
+
+    .action-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: var(--accent-color);
+      opacity: 0;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 0.7;
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 0.7;
+      }
+    }
+
+    .pulse {
+      width: 60px;
+      height: 60px;
+      margin: 30px auto;
+      background-color: var(--secondary-color);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .container {
+        padding: 30px 20px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      .game-stats {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .actions {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .action-button {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 25px 15px;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Oops! Something went wrong</h1>
+    <p>We're sorry for the inconvenience. Our team has been notified and we're working to fix the issue.</p>
+    
+    <div class="error-details" id="errorDetails">
+      <!-- Error details will be inserted here by your Express server -->
+      Error: Server unavailable
+      <br>
+      Status: 503
+      <br>
+      Request ID: {{requestId}}
+    </div>
+    
+    <div class="game-container">
+      <h2 class="game-title">While you wait...</h2>
+      <p>Play this simple game to pass the time</p>
+      
+      <button class="game-button" id="clickButton">Click Me!</button>
+      
+      <div class="game-stats">
+        <div class="stat">Clicks: <span class="stat-value" id="clickCount">0</span></div>
+        <div class="stat">High Score: <span class="stat-value" id="highScore">0</span></div>
+      </div>
+    </div>
+    
+    <div class="pulse"></div>
+    
+    <div class="actions">
+      <button class="action-button primary" id="refreshButton">Try Again</button>
+      <button class="action-button secondary" id="contactButton">Contact Support</button>
+    </div>
+  </div>
+
+  <script>
+    // Simple clicker game
+    let clickCount = 0;
+    let highScore = localStorage.getItem('highScore') || 0;
+    
+    document.getElementById('highScore').textContent = highScore;
+    document.getElementById('clickButton').addEventListener('click', function() {
+      clickCount++;
+      document.getElementById('clickCount').textContent = clickCount;
+      
+      // Create a confetti effect
+      createConfetti();
+      
+      // Update high score if needed
+      if (clickCount > highScore) {
+        highScore = clickCount;
+        localStorage.setItem('highScore', highScore);
+        document.getElementById('highScore').textContent = highScore;
+      }
+      
+      // Make the button grow slightly on click
+      this.style.transform = 'scale(1.1)';
+      setTimeout(() => {
+        this.style.transform = 'scale(1)';
+      }, 100);
+    });
+    
+    // Button actions
+    document.getElementById('refreshButton').addEventListener('click', function() {
+      window.location.reload();
+    });
+    
+    document.getElementById('contactButton').addEventListener('click', function() {
+      alert('Please email support@infrasafe.com for assistance.');
+    });
+    
+    // Confetti effect function
+    function createConfetti() {
+      const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFBE0B'];
+      const container = document.querySelector('.container');
+      
+      for (let i = 0; i < 10; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.top = '-10px';
+        container.appendChild(confetti);
+        
+        const animationDuration = Math.random() * 3 + 2;
+        
+        confetti.style.animation = `
+          drop ${animationDuration}s linear forwards,
+          spin ${animationDuration}s linear infinite
+        `;
+        
+        // Remove confetti after animation
+        setTimeout(() => {
+          confetti.remove();
+        }, animationDuration * 1000);
+      }
+      
+      // Add CSS for confetti animation
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes drop {
+          to {
+            transform: translateY(calc(100vh + 10px)) rotate(720deg);
+            opacity: 1;
+          }
+        }
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  </script>
+</body>
+</html>
