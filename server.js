@@ -79,7 +79,7 @@ const PORT = process.env.PORT || 3000;
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
-  "http://192.168.0.119:3000",
+  "http://wifiIP_if_you_are_using_your_physical_devices_like_mobile:3000",
 ];
 
 app.use(
